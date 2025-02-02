@@ -1,39 +1,32 @@
-# [Project Name] 🎯
+# Portfolio Website Developer 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: DEVA
 
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Member 1: Deva Nandana Pavanan - School of Engineering, CUSAT
+
 
 ### Hosted Project Link
-[mention your project hosted project link here]
+https://youtu.be/UqCYC235yxk
 
 ### Project Description
-[2-3 lines about what your project does]
+It is a resume builder website. It uses google gemini to convert prompts from users to portfolio website.
 
 ### The Problem statement
-[What ridiculous problem are you solving?]
+Anyone can easily create, showcase and easily share ones proffesional resume and achievements.
 
 ### The Solution
-[How are you solving it? Keep it fun!]
+By creating a website where one can create portfolio website with just a prompt
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- Node Js, Html, Javascript
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+
 
 ### Implementation
 For Software:
