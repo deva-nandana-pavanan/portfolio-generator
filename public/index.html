@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI Image & Text Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 8px;
+        }
+        #generatedContent {
+            margin-top: 20px;
+        }
+        iframe {
+            width: 100%;
+            min-height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Create Awesome Portfolio Websites with just a Prompt!</h2>
+    
+    <input type="text" id="userText" placeholder="Enter your question..." />
+    <input type="file" id="imageUpload" accept="image/*" />
+    <button onclick="generateAIResponse()">Generate</button>
+    
+    <p id="response"></p>
+    <div id="generatedContent"></div>
+
+    <script>
+        async function generateAIResponse() {
+            const textInput = document.getElementById("userText").value;
+            const imageInput = document.getElementById("imageUpload").files[0];
+            const responseElement = document.getElementById("response");
+            const contentContainer = document.getElementById("generatedContent");
+
+            if (!textInput) {
+                alert("Please enter a text prompt!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("text", textInput);
+            if (imageInput) formData.append("image", imageInput);
+
+            responseElement.innerText = "Generating...";
+            contentContainer.innerHTML = '';
+
+            try {
+                const response = await fetch("http://localhost:3000/generate", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const htmlContent = await response.text();
+                
+                // Remove any potential Markdown code block markers
+                const cleanHtml = htmlContent.replace(/```[a-z]*\n|\n```/g, '');
+                
+                // Create a new iframe
+                const iframe = document.createElement('iframe');
+                contentContainer.appendChild(iframe);
+                
+                // Get the iframe's document
+                const iframeDoc = iframe.contentWindow.document;
+                
+                // Write the clean HTML to the iframe
+                iframeDoc.open();
+                iframeDoc.write(cleanHtml);
+                iframeDoc.close();
+                
+                // Clear the "Generating..." message
+                responseElement.innerText = "";
+                
+                // Adjust iframe height to content
+                iframe.onload = () => {
+                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                };
+            } catch (error) {
+                responseElement.innerText = `Error: ${error.message}`;
+                contentContainer.innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</html>
